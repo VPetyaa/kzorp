@@ -14,7 +14,9 @@ script:
   - sudo mk-build-deps -i
   - autoreconf -i
   - ./configure
-  - make
+  - cd net/netfilter
+  - make notest
+  - cd ../..
   - sudo modprobe nf_conntrack
   - sudo insmod net/netfilter/kzorp.ko
   - sudo make check
