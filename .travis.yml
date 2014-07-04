@@ -7,7 +7,7 @@ branches:
 before_install:
   - wget  -qO - http://download.opensuse.org/repositories/security:/Zorp/xUbuntu_12.04/Release.key | sudo apt-key add -
   - sudo apt-get install -qq python-software-properties
-  - sudo add-apt-repository ppa:dns/gnu
+  - sudo add-apt-repository -y ppa:dns/gnu
   - sudo apt-get update -qq
 script:
   - sudo apt-get install -qq devscripts equivs
@@ -15,6 +15,8 @@ script:
   - autoreconf -i
   - ./configure
   - make
+  - sudo modprobe nf_conntrack
+  - sudo insmod net/netfilter/kzorp.ko
   - sudo make check
 after_success:
   - dpkg-buildpackage -S
