@@ -15,15 +15,9 @@
 #include <net/netfilter/nf_conntrack_zones.h>
 #include <linux/netfilter/kzorp.h>
 
-#ifndef KZ_USERSPACE
-	#define PRIVATE static
-#else
-	#define	PRIVATE
-#endif
-
-PRIVATE unsigned int kz_hash_shift = 4;
-PRIVATE unsigned int kz_hash_size;
-PRIVATE struct hlist_nulls_head *kz_hash;
+static unsigned int kz_hash_shift = 4;
+static unsigned int kz_hash_size;
+static struct hlist_nulls_head *kz_hash;
 
 unsigned const int kz_hash_rnd = 0x9e370001UL;	//golden ratio prime
 
@@ -97,14 +91,14 @@ static void kz_extension_timer(unsigned long ctp)
 	(*oldtimer) (ctp);
 }
 
-PRIVATE void kz_extension_fill_one(struct nf_conntrack_kzorp *kzorp, struct nf_conn *ct,int direction)
+static void kz_extension_fill_one(struct nf_conntrack_kzorp *kzorp, struct nf_conn *ct,int direction)
 {
 	struct nf_conntrack_tuple_hash *th = &(kzorp->tuplehash[direction]);
 	unsigned int bucket = hash_conntrack_raw( &(th->tuple), nf_ct_zone(ct)) >> (32 - kz_hash_shift);
 	hlist_nulls_add_head(&(th->hnnode), &kz_hash[bucket]);
 }
 
-PRIVATE void kz_extension_fill(struct nf_conntrack_kzorp *kzorp, struct nf_conn *ct)
+static void kz_extension_fill(struct nf_conntrack_kzorp *kzorp, struct nf_conn *ct)
 {
 	int i;
 	for (i = 0; i < IP_CT_DIR_MAX; i++) {
@@ -112,7 +106,7 @@ PRIVATE void kz_extension_fill(struct nf_conntrack_kzorp *kzorp, struct nf_conn 
 	}
 }
 
-PRIVATE void kz_extension_copy_tuplehash(struct nf_conntrack_kzorp *kzorp, struct nf_conn *ct)
+static void kz_extension_copy_tuplehash(struct nf_conntrack_kzorp *kzorp, struct nf_conn *ct)
 {
 	memcpy(&(kzorp->tuplehash), &(ct->tuplehash),
 	       IP_CT_DIR_MAX * sizeof(struct nf_conntrack_tuple_hash));

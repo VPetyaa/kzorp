@@ -25,12 +25,6 @@
 
 #include <linux/netfilter/kzorp.h>
 
-#ifdef KZ_USERSPACE
-#define KZ_PROTECTED
-#else
-#define KZ_PROTECTED static
-#endif
-
 #define KZ_NOT_MATCHING_SCORE ((u_int64_t)-1)
 
 struct kz_lookup_ipv6_node {
@@ -62,10 +56,10 @@ struct kz_rule_lookup_cursor {
 	u_int32_t pos;
 };
 
-KZ_PROTECTED struct kz_rule_lookup_data*
+static struct kz_rule_lookup_data*
 kz_rule_lookup_cursor_next_rule(struct kz_rule_lookup_cursor *cursor);
 
-KZ_PROTECTED int64_t
+static int64_t
 kz_ndim_eval_rule(struct kz_rule_lookup_cursor * cursor,
 		  int64_t best_all,
 		  const struct kz_reqids * const reqids,
@@ -79,10 +73,10 @@ kz_ndim_eval_rule(struct kz_rule_lookup_cursor * cursor,
 		  const unsigned long *src_zone_mask,
 		  const unsigned long *dst_zone_mask);
 
-KZ_PROTECTED size_t
+static size_t
 kz_generate_lookup_data_rule_size(const struct kz_dispatcher_n_dimension_rule * const rule);
 
-KZ_PROTECTED struct kz_rule_lookup_data *
+static struct kz_rule_lookup_data *
 kz_generate_lookup_data_rule(const struct kz_dispatcher_n_dimension_rule * const rule, void *buf);
 
 /**
@@ -105,7 +99,7 @@ struct kz_percpu_env {
   size_t result_size;
 };
 
-KZ_PROTECTED u_int32_t
+static u_int32_t
 kz_ndim_eval(
   const struct kz_reqids *reqids, const struct net_device *iface, u_int8_t l3proto,
   const union nf_inet_addr * const src_addr, const union nf_inet_addr * const dst_addr,
@@ -179,22 +173,22 @@ mask_to_size_v6(const struct in6_addr * const mask)
 	return 128;
 }
 
-KZ_PROTECTED void
+static void
 kz_generate_lookup_data(struct kz_head_d *dispatchers);
 
-KZ_PROTECTED inline struct kz_lookup_ipv6_node *
+static inline struct kz_lookup_ipv6_node *
 ipv6_node_new(void);
 
-KZ_PROTECTED inline void
+static inline void
 ipv6_node_free(struct kz_lookup_ipv6_node *n);
 
 struct kz_lookup_ipv6_node *
 ipv6_add(struct kz_lookup_ipv6_node *root, struct in6_addr *addr, int prefix_len);
 
-KZ_PROTECTED struct kz_lookup_ipv6_node *
+static struct kz_lookup_ipv6_node *
 ipv6_lookup(struct kz_lookup_ipv6_node *root, const struct in6_addr *addr);
 
-KZ_PROTECTED void
+static void
 ipv6_destroy(struct kz_lookup_ipv6_node *node);
 
 #endif /* _KZORP_LOOKUP_INTERNAL_H */

@@ -929,7 +929,7 @@ kz_ndim_eval_rule_dst(const u_int32_t n_subnets, const struct kz_in_subnet * con
 
 /* structs used for lookup data to encode dimensions */
 
-KZ_PROTECTED struct kz_rule_lookup_data*
+static struct kz_rule_lookup_data*
 kz_rule_lookup_cursor_next_rule(struct kz_rule_lookup_cursor *cursor)
 {
 	if (cursor->rule->bytes_to_next == 0)
@@ -982,7 +982,7 @@ enum KZORP_DIMENSIONS {
 		} \
 	} while (0);
 
-KZ_PROTECTED size_t
+static size_t
 kz_generate_lookup_data_rule_size(const struct kz_dispatcher_n_dimension_rule * const rule)
 {
 	size_t rule_size = sizeof(struct kz_rule_lookup_data);
@@ -997,7 +997,7 @@ kz_generate_lookup_data_rule_size(const struct kz_dispatcher_n_dimension_rule * 
 	return PAD(rule_size, 8);
 }
 
-KZ_PROTECTED struct kz_rule_lookup_data *
+static struct kz_rule_lookup_data *
 kz_generate_lookup_data_rule(const struct kz_dispatcher_n_dimension_rule * const rule, void *buf)
 {
 	void *pos = buf;
@@ -1076,7 +1076,7 @@ kz_generate_lookup_data_rule(const struct kz_dispatcher_n_dimension_rule * const
 	return buf;
 }
 
-KZ_PROTECTED void
+static void
 kz_generate_lookup_data(struct kz_head_d *dispatchers)
 {
 	struct kz_dispatcher *dispatcher;
@@ -1137,7 +1137,7 @@ kz_generate_lookup_data(struct kz_head_d *dispatchers)
 		EVAL_DIM_RES(NAME); \
 	} while (0);
 
-KZ_PROTECTED int64_t
+static int64_t
 kz_ndim_eval_rule(struct kz_rule_lookup_cursor * cursor,
 		   int64_t best_all,
 		   const struct kz_reqids * const reqids,
@@ -1244,7 +1244,7 @@ kz_adjust_zone(const struct kz_zone *zone)
 	return zone;
 }
 
-KZ_PROTECTED u_int32_t
+static u_int32_t
 kz_ndim_eval(const struct kz_reqids *reqids, const struct net_device *iface, u_int8_t l3proto,
 	      const union nf_inet_addr * const src_addr, const union nf_inet_addr * const dst_addr,
 	      u_int8_t l4proto, u_int16_t src_port, u_int16_t dst_port,
@@ -1486,19 +1486,17 @@ EXPORT_SYMBOL_GPL(kz_head_zone_ipv4_lookup);
  * IPv6 zone lookup
  ***********************************************************/
 
-#ifndef KZ_USERSPACE
-KZ_PROTECTED inline struct kz_lookup_ipv6_node *
+static inline struct kz_lookup_ipv6_node *
 ipv6_node_new(void)
 {
 	return kzalloc(sizeof(struct kz_lookup_ipv6_node), GFP_KERNEL);
 }
 
-KZ_PROTECTED inline void
+static inline void
 ipv6_node_free(struct kz_lookup_ipv6_node *n)
 {
 	kfree(n);
 }
-#endif
 
 static inline __be32
 ipv6_addr_bit_set(const void *token, int bit)
@@ -1632,7 +1630,7 @@ insert_above:
 	return leaf;
 }
 
-KZ_PROTECTED struct kz_lookup_ipv6_node *
+static struct kz_lookup_ipv6_node *
 ipv6_lookup(struct kz_lookup_ipv6_node *root, const struct in6_addr *addr)
 {
 	struct kz_lookup_ipv6_node *n = root;
@@ -1672,7 +1670,7 @@ ipv6_lookup(struct kz_lookup_ipv6_node *root, const struct in6_addr *addr)
 	return NULL;
 }
 
-KZ_PROTECTED void
+static void
 ipv6_destroy(struct kz_lookup_ipv6_node *node)
 {
 	if (node->left)
