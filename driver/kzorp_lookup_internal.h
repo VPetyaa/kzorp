@@ -23,7 +23,7 @@
  * The File containing the definitions of the functions must include this file.
  */
 
-#include <linux/netfilter/kzorp.h>
+#include "kzorp.h"
 
 #define KZ_NOT_MATCHING_SCORE ((u_int64_t)-1)
 

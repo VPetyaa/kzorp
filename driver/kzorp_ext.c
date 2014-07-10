@@ -13,7 +13,7 @@
 #include <linux/hash.h>
 #include <linux/bootmem.h>
 #include <net/netfilter/nf_conntrack_zones.h>
-#include <linux/netfilter/kzorp.h>
+#include "kzorp.h"
 
 static unsigned int kz_hash_shift = 4;
 static unsigned int kz_hash_size;
