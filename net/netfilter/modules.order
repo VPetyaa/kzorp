@@ -1,0 +1,4 @@
+kernel//home/balabit/kzorp/net/netfilter/kzorp.ko
+kernel//home/balabit/kzorp/net/netfilter/xt_KZORP.ko
+kernel//home/balabit/kzorp/net/netfilter/xt_service.ko
+kernel//home/balabit/kzorp/net/netfilter/xt_zone.ko

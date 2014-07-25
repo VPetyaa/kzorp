@@ -23,9 +23,6 @@ scripts/Makefile
 pylib/Makefile
 pylib/kzorp/Makefile
 pylib/Zorp/Makefile
-tests/Makefile
-tests/communication/Makefile
-tests/query/Makefile
 net/netfilter/dkms.conf
 ])
 AC_OUTPUT

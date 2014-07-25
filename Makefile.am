@@ -1,10 +1,12 @@
-SUBDIRS = pylib scripts tests
+SUBDIRS = pylib scripts
 
 kprefix = $(prefix)/src/kzorp-$(PACKAGE_VERSION)
 
 ksrcdir = $(kprefix)/net/netfilter
 
 ksrctestdir = $(ksrcdir)/tests
+
+ksrcpytestdir = $(ksrcdir)/tests/pytests
 
 ksrcincdir = $(kprefix)/
 
@@ -28,7 +30,8 @@ nobase_ksrcinc_DATA = include/linux/netfilter/kzorp.h\
             include/linux/netfilter/xt_KZORP.h\
             include/net/netfilter/kzorp_internal.h\
             include/net/netfilter/kzorp_lookup_internal.h\
-            include/net/netfilter/kzorp_compat.h
+            include/net/netfilter/kzorp_compat.h\
+            include/net/netfilter/kzorp_tproxy_core.h
 
 ksrctest_DATA = net/netfilter/tests/100000rules_policy.py\
                 net/netfilter/tests/get_kzorp_result.c\
@@ -47,6 +50,20 @@ ksrctest_DATA = net/netfilter/tests/100000rules_policy.py\
                 net/netfilter/tests/test_mocks.h\
                 net/netfilter/tests/test_ndim_eval.c
 
+
+ksrcpytest_DATA = net/netfilter/tests/pytests/__init__.py\
+                  net/netfilter/tests/pytests/KZorpBaseTestCaseBind.py\
+                  net/netfilter/tests/pytests/KZorpBaseTestCaseDispatchers.py\
+                  net/netfilter/tests/pytests/KZorpBaseTestCaseQuery.py\
+                  net/netfilter/tests/pytests/KZorpBaseTestCaseZones.py\
+                  net/netfilter/tests/pytests/KZorpComm.py\
+                  net/netfilter/tests/pytests/KZorpTestCaseDispatchers.py\
+                  net/netfilter/tests/pytests/KZorpTestCaseQueryNDim.py\
+                  net/netfilter/tests/pytests/KZorpTestCaseServices.py\
+                  net/netfilter/tests/pytests/KZorpTestCaseTransaction.py\
+                  net/netfilter/tests/pytests/KZorpTestCaseZones.py\
+                  net/netfilter/tests/pytests/testall.py\
+                  net/netfilter/tests/pytests/testutil.py
 
 clean-local:
 	(cd net/netfilter && [ ! -f Makefile ] || $(MAKE) clean)

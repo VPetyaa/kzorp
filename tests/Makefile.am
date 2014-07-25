@@ -1,1 +1,0 @@
-SUBDIRS=communication query
