@@ -30,10 +30,10 @@ after_success:
   - echo -e "addFilter(\".*\") \n" > ../kzorp.rpmlintrc
   - cp rpm/* ../
   - echo -e "[general]\napiurl = https://api.opensuse.org\n[https://api.opensuse.org]\nuser = VPetya\npass = $PASS\n" > ~/.oscrc
-  - osc co home:VPetya:travis
-  - rm home:VPetya:travis/kzorp/*
-  - mv ../*.* home:VPetya:travis/kzorp
-  - cd home:VPetya:travis/kzorp
+  - osc co security:Zorp:LBaaS
+  - rm security:Zorp:LBaaS/kzorp/*
+  - mv ../*.* security:Zorp:LBaaS/kzorp
+  - cd security:Zorp:LBaaS/kzorp
   - osc addremove
   - osc commit -m "TRAVIS"
 env:
